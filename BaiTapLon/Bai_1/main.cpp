@@ -14,10 +14,14 @@ using namespace std;
 zVector<DanhMucMatHang> MatHang;
 zVector<HoaDonMuaBanHang> HoaDon;
 
-// ifstream inputFile("input.txt");
-// ofstream outputFile("output.txt");
-// inputFile.close();
-// outputFile.close();
+string autoTab(int _tabTimes, const int &_strLen, const string &extraString = "")
+{
+    string _tab;
+    _tabTimes -= _strLen / 8;
+    while (_tabTimes-- > 0)
+        _tab += "\t" + extraString;
+    return _tab;
+}
 
 void chooseMode();
 void mode1()
@@ -73,18 +77,20 @@ void mode1()
         HoaDon.push_back(temp);
     }
     cout << "Nhap du lieu hoan tat!" << endl;
-    for (const auto &x : MatHang)
-        cout << x << endl;
-    cout << endl
-         << endl;
-    for (const auto &x : HoaDon)
-        cout << x << endl;
+    // for (const auto &x : MatHang)
+    //     cout << x << endl;
+    // cout << endl
+    //      << endl;
+    // for (const auto &x : HoaDon)
+    //     cout << x << endl;
     iFile.close();
 }
 void mode2()
 {
-    ofstream oFile("output.txt");
-
+    string nameFile;
+    cout << "Nhap ten file muon xuat (VD: output.txt): ";
+    cin >> nameFile;
+    ofstream oFile(nameFile);
     for (const DanhMucMatHang &x : MatHang)
     {
         oFile << x.getMaHang() << endl;
@@ -103,7 +109,7 @@ void mode2()
         oFile << x.getGiaMuaBan() << endl;
     }
 
-    cout << "Da ghi thong tin qua ly ra file output.txt" << endl;
+    cout << "Da ghi thong tin qua ly ra file " << nameFile << endl;
     oFile.close();
 }
 void mode3()
@@ -112,11 +118,40 @@ void mode3()
 }
 void mode4()
 {
-    cout << "Dang trong qua trinh phat trien! Vui long quay tro lai o nhung phien ban sau..." << endl;
+    cout << "Toan bo danh cac mat hang:" << endl;
+    cout << "*****Ma_Hang********************Ten_Mat_Hang********************Nha_San_Xuat*****" << endl;
+    // cout << "************Ten_Mat_Hang****************************Ton_Kho******" << endl;
+    for (const DanhMucMatHang &x : MatHang)
+    {
+        if (x.getSoLuong() > 0)
+        {
+            cout << "* " << autoTab(10, 2) << "*" << endl;
+            cout << "*    " << x.getMaHang() << autoTab(2, 10);
+            cout << x.getTenHang() << autoTab(9, x.getTenHang().length() + 21);
+            cout << x.getNhaSanXuat() << autoTab(10, x.getNhaSanXuat().length() + 64) << "*" << endl;
+        }
+    }
+    cout << "* " << autoTab(10, 2) << "*" << endl;
+    cout << "*********************************************************************************" << endl;
 }
 void mode5()
 {
-    cout << "Dang trong qua trinh phat trien! Vui long quay tro lai o nhung phien ban sau..." << endl;
+    int count = 0;
+    for (const DanhMucMatHang &x : MatHang)
+        if (x.getSoLuong() > 0)
+            count++;
+    cout << "Co " << count << " mat hang dang ton kho!" << endl;
+    cout << "************Ten_Mat_Hang****************************Ton_Kho******" << endl;
+    for (const DanhMucMatHang &x : MatHang)
+    {
+        if (x.getSoLuong() > 0)
+        {
+            cout << "* " << autoTab(8, 2) << "*" << endl;
+            cout << "* " << x.getTenHang() << autoTab(7, x.getTenHang().length() + 2, "_") << x.getSoLuong() << "\t*" << endl;
+        }
+    }
+    cout << "* " << autoTab(8, 2) << "*" << endl;
+    cout << "*****************************************************************" << endl;
 }
 
 void returnMenu();
