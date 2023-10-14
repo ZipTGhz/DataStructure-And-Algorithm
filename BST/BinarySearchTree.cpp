@@ -164,7 +164,11 @@ public:
     bool empty() { return _size == 0; }
     long long size() { return _size; }
 
-    ~BinarySearchTree() { deleteRoot(root); }
+    ~BinarySearchTree()
+    {
+        if (root)
+            deleteRoot(root);
+    }
 };
 
 main()

@@ -1,5 +1,8 @@
+#include <iostream>
 #include "iterator.cpp"
 #include <initializer_list>
+
+using namespace std;
 
 #ifndef __vector__cpp__
 #define __vector__cpp__
