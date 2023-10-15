@@ -121,11 +121,11 @@ void mode1()
 
         HoaDon.push_back(temp);
     }
-    for (const auto &x : HoaDon)
+    for (auto it = HoaDon.rbegin(); it != HoaDon.rend(); it++)
     {
-        size_t pos = x.getMaHoaDon().find(aGen.generateMaHoaDon);
-        if (x.getMaHoaDon().find(aGen.generateMaHoaDon) != string::npos)
-            countHoaDon = aGen.__plusOne(countHoaDon);
+        if ((*it).getMaHoaDon().find(aGen.generateMaHoaDon) == string::npos)
+            break;
+        countHoaDon = aGen.__plusOne(countHoaDon);
     }
     cout << "Nhap du lieu hoan tat!" << endl;
     iFile.close();
@@ -193,7 +193,7 @@ void mode3()
     pos = findByMaHang(tempHoaDon.getMaHang());
     if (!tempHoaDon.getLoaiHoaDon())
         MatHang[pos].setSoLuong(MatHang[pos].getSoLuong() + tempHoaDon.getSoLuong());
-    else if (MatHang[pos].getSoLuong() > tempHoaDon.getSoLuong())
+    else if (MatHang[pos].getSoLuong() >= tempHoaDon.getSoLuong())
         MatHang[pos].setSoLuong(MatHang[pos].getSoLuong() - tempHoaDon.getSoLuong());
     else
     {
@@ -213,13 +213,10 @@ void mode4()
     cout << "*****Ma_Hang********************Ten_Mat_Hang********************Nha_San_Xuat*****" << endl;
     for (const DanhMucMatHang &x : MatHang)
     {
-        if (x.getSoLuong() > 0)
-        {
-            cout << "* " << aGen.autoTab(10, 2) << "*" << endl;
-            cout << "*    " << x.getMaHang() << aGen.autoTab(2, 10);
-            cout << x.getTenHang() << aGen.autoTab(8, x.getTenHang().length() + 16);
-            cout << x.getNhaSanXuat() << aGen.autoTab(10, x.getNhaSanXuat().length() + 64) << "*" << endl;
-        }
+        cout << "* " << aGen.autoTab(10, 2) << "*" << endl;
+        cout << "*    " << x.getMaHang() << aGen.autoTab(2, 10);
+        cout << x.getTenHang() << aGen.autoTab(8, x.getTenHang().length() + 16);
+        cout << x.getNhaSanXuat() << aGen.autoTab(10, x.getNhaSanXuat().length() + 64) << "*" << endl;
     }
     cout << "* " << aGen.autoTab(10, 2) << "*" << endl;
     cout << "*********************************************************************************" << endl;
