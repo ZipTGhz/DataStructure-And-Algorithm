@@ -15,6 +15,7 @@ zVector<DanhMucMatHang> MatHang;
 zVector<HoaDonMuaBanHang> HoaDon;
 
 string countHoaDon = "0000";
+autoGen aGen;
 
 void chooseMode();
 void mode0();
@@ -122,9 +123,9 @@ void mode1()
     }
     for (const auto &x : HoaDon)
     {
-        size_t pos = x.getMaHoaDon().find(generateMaHoaDon);
-        if (x.getMaHoaDon().find(generateMaHoaDon) != string::npos)
-            countHoaDon = __plusOne(countHoaDon);
+        size_t pos = x.getMaHoaDon().find(aGen.generateMaHoaDon);
+        if (x.getMaHoaDon().find(aGen.generateMaHoaDon) != string::npos)
+            countHoaDon = aGen.__plusOne(countHoaDon);
     }
     cout << "Nhap du lieu hoan tat!" << endl;
     iFile.close();
@@ -199,8 +200,8 @@ void mode3()
         cout << "Khong du so luong mat hang!";
         return;
     }
-    tempHoaDon.setMaHoaDon(autoGenerate_MaHoaDon(countHoaDon));
-    tempHoaDon.setNgayMuaBan(autoGenerateCurrentDay);
+    tempHoaDon.setMaHoaDon(aGen.autoGenerate_MaHoaDon(countHoaDon));
+    tempHoaDon.setNgayMuaBan(aGen.autoGenerateCurrentDay);
     HoaDon.push_back(tempHoaDon);
     cout << "Da luu thong tin hoa don vao co so du lieu!" << endl;
 }
@@ -214,13 +215,13 @@ void mode4()
     {
         if (x.getSoLuong() > 0)
         {
-            cout << "* " << autoTab(10, 2) << "*" << endl;
-            cout << "*    " << x.getMaHang() << autoTab(2, 10);
-            cout << x.getTenHang() << autoTab(8, x.getTenHang().length() + 16);
-            cout << x.getNhaSanXuat() << autoTab(10, x.getNhaSanXuat().length() + 64) << "*" << endl;
+            cout << "* " << aGen.autoTab(10, 2) << "*" << endl;
+            cout << "*    " << x.getMaHang() << aGen.autoTab(2, 10);
+            cout << x.getTenHang() << aGen.autoTab(8, x.getTenHang().length() + 16);
+            cout << x.getNhaSanXuat() << aGen.autoTab(10, x.getNhaSanXuat().length() + 64) << "*" << endl;
         }
     }
-    cout << "* " << autoTab(10, 2) << "*" << endl;
+    cout << "* " << aGen.autoTab(10, 2) << "*" << endl;
     cout << "*********************************************************************************" << endl;
 }
 
@@ -237,11 +238,11 @@ void mode5()
     {
         if (x.getSoLuong() > 0)
         {
-            cout << "* " << autoTab(8, 2) << "*" << endl;
-            cout << "* " << x.getTenHang() << autoTab(7, x.getTenHang().length() + 2, '_') << x.getSoLuong() << "\t*" << endl;
+            cout << "* " << aGen.autoTab(8, 2) << "*" << endl;
+            cout << "* " << x.getTenHang() << aGen.autoTab(7, x.getTenHang().length() + 2, '_') << x.getSoLuong() << "\t*" << endl;
         }
     }
-    cout << "* " << autoTab(8, 2) << "*" << endl;
+    cout << "* " << aGen.autoTab(8, 2) << "*" << endl;
     cout << "*****************************************************************" << endl;
 }
 
