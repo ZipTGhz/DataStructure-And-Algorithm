@@ -7,7 +7,7 @@ using namespace std;
 class DanhMucMatHang
 {
 private:
-    int soLuong = 0;
+    long long soLuong = 0;
     string maHang;
     string tenHang;
     string nhaSanXuat;
@@ -43,10 +43,13 @@ public:
         return cout;
     }
 
-    void setSoLuong(const int &soLuong) { this->soLuong = soLuong; }
+    void setSoLuong(const long long &soLuong) { this->soLuong = soLuong; }
+    void setMaHang(const string &maHang) { this->maHang = maHang; }
+    void setTenHang(const string &tenHang) { this->tenHang = tenHang; }
+    void setNhaSanXuat(const string &nhaSanXuat) { this->nhaSanXuat = nhaSanXuat; }
 
-    int getSoLuong() { return soLuong; }
-    int getSoLuong() const { return soLuong; }
+    long long getSoLuong() { return soLuong; }
+    long long getSoLuong() const { return soLuong; }
     string getMaHang() { return maHang; }
     string getMaHang() const { return maHang; }
     string getTenHang() { return tenHang; }

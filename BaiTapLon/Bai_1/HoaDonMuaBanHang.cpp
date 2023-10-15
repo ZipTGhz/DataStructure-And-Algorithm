@@ -15,7 +15,7 @@ private:
     string ngayMuaBan;
 
 public:
-    HoaDonMuaBanHang(string maHoaDon = "Unkown", string maHang = "Unkown", bool loaiHoaDon = 0, long long soLuong = 0, string ngayMuaBan = "Unkown", long long giaMuaBan = 0)
+    HoaDonMuaBanHang(string maHoaDon = "Unknown", string maHang = "Unknown", bool loaiHoaDon = 0, long long soLuong = 0, string ngayMuaBan = "Unknown", long long giaMuaBan = 0)
     {
         this->maHoaDon = maHoaDon;
         this->maHang = maHang;
@@ -25,11 +25,34 @@ public:
         this->soLuong = soLuong;
     }
 
+    friend istream &operator>>(istream &cin, HoaDonMuaBanHang &_hoaDon)
+    {
+        fflush(stdin);
+        cout << "Nhap ma hoa don: ";
+        getline(cin, _hoaDon.maHoaDon);
+        cout << "Nhap ma hang: ";
+        getline(cin, _hoaDon.maHang);
+        cout << "Nhap loai hoa don(0 la Mua, 1 la Ban): ";
+        cin >> _hoaDon.loaiHoaDon;
+        cout << "Nhap so luong " << (_hoaDon.loaiHoaDon ? "ban" : "mua") << ": ";
+        cin >> _hoaDon.soLuong;
+        cout << "Nhap gia " << (_hoaDon.loaiHoaDon ? "ban" : "mua") << ": ";
+        cin >> _hoaDon.giaMuaBan;
+        return cin;
+    }
+
     friend ostream &operator<<(ostream &cout, const HoaDonMuaBanHang &_hoaDon)
     {
         cout << _hoaDon.maHoaDon << " - " << _hoaDon.maHang << " - " << (_hoaDon.loaiHoaDon ? "Mua" : "Ban") << " - " << _hoaDon.soLuong << " - " << _hoaDon.ngayMuaBan << " - " << _hoaDon.giaMuaBan;
         return cout;
     }
+
+    void setLoaiHoaDon(const bool &loaiHoaDon) { this->loaiHoaDon = loaiHoaDon; }
+    void setSoLuong(const long long &soLuong) { this->soLuong = soLuong; }
+    void setGiaMuaBan(const long long &giaMuaBan) { this->giaMuaBan = giaMuaBan; }
+    void setMaHoaDon(const string &maHoaDon) { this->maHoaDon = maHoaDon; }
+    void setMaHang(const string &maHang) { this->maHang = maHang; }
+    void setNgayMuaBan(const string ngayMuaBan) { this->ngayMuaBan = ngayMuaBan; }
 
     bool getLoaiHoaDon() { return loaiHoaDon; }
     bool getLoaiHoaDon() const { return loaiHoaDon; }
