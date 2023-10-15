@@ -14,18 +14,17 @@ using namespace std;
 zVector<DanhMucMatHang> MatHang;
 zVector<HoaDonMuaBanHang> HoaDon;
 
-string countHoaDon = []
-{
-    string count = "0000";
-    return count;
-}();
+string countHoaDon = "0000";
 
 void chooseMode();
+void mode0();
 void mode1();
 void mode2();
 void mode3();
 void mode4();
 void mode5();
+
+void (*mode[])() = {&mode0, &mode1, &mode2, &mode3, &mode4, &mode5};
 
 int findByMaHang(const string &);
 void returnMenu();
@@ -56,39 +55,20 @@ main()
 void chooseMode()
 {
     int n;
-    cout << "Nhap lua chon cua ban: ";
-    cin >> n;
-
-    if (n == 1)
-        mode1();
-    else if (n == 2)
-        mode2();
-    else if (n == 3)
+    do
     {
-        system("cls");
-        mode3();
-    }
-    else if (n == 4)
-    {
-        system("cls");
-        mode4();
-    }
-    else if (n == 5)
-    {
-        system("cls");
-        mode5();
-    }
-    else if (n == 0)
-    {
-        cout << "Dang thoat chuong trinh..." << endl;
-        usleep(300000);
-        exit(0);
-    }
-    else
-    {
-        cout << "Khong tim thay lua chon duoc yeu cau!" << endl;
-    }
+        cout << "Nhap lua chon cua ban: ";
+        cin >> n;
+    } while (n < 0 || n > 5);
+    (*mode[n])();
     returnMenu();
+}
+
+void mode0()
+{
+    cout << "Dang thoat chuong trinh..." << endl;
+    usleep(300000);
+    exit(0);
 }
 
 void mode1()
@@ -180,6 +160,7 @@ void mode2()
 
 void mode3()
 {
+    system("cls");
     HoaDonMuaBanHang tempHoaDon;
     cin >> tempHoaDon;
     int pos = findByMaHang(tempHoaDon.getMaHang());
@@ -226,6 +207,7 @@ void mode3()
 
 void mode4()
 {
+    system("cls");
     cout << "Toan bo danh cac mat hang:" << endl;
     cout << "*****Ma_Hang********************Ten_Mat_Hang********************Nha_San_Xuat*****" << endl;
     for (const DanhMucMatHang &x : MatHang)
@@ -244,6 +226,7 @@ void mode4()
 
 void mode5()
 {
+    system("cls");
     int count = 0;
     for (const DanhMucMatHang &x : MatHang)
         if (x.getSoLuong() > 0)
