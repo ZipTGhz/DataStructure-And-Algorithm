@@ -20,20 +20,6 @@ public:
         this->nhaSanXuat = nhaSanXuat;
     }
 
-    DanhMucMatHang(const DanhMucMatHang &_temp)
-    {
-        maHang = _temp.maHang;
-        tenHang = _temp.tenHang;
-        nhaSanXuat = _temp.nhaSanXuat;
-    }
-
-    void operator=(const DanhMucMatHang &_temp)
-    {
-        maHang = _temp.maHang;
-        tenHang = _temp.tenHang;
-        nhaSanXuat = _temp.nhaSanXuat;
-    }
-
     friend ostream &operator<<(ostream &cout, const DanhMucMatHang &_matHang)
     {
         cout << _matHang.maHang << endl;

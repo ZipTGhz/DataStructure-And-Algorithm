@@ -28,8 +28,6 @@ public:
     friend istream &operator>>(istream &cin, HoaDonMuaBanHang &_hoaDon)
     {
         fflush(stdin);
-        cout << "Nhap ma hoa don: ";
-        getline(cin, _hoaDon.maHoaDon);
         cout << "Nhap ma hang: ";
         getline(cin, _hoaDon.maHang);
         cout << "Nhap loai hoa don(0 la Mua, 1 la Ban): ";
