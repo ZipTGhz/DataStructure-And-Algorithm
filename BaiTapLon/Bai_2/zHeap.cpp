@@ -1,4 +1,3 @@
-// #include <iostream>
 #include "zVector.cpp"
 
 using namespace std;
@@ -60,6 +59,7 @@ public:
     }
 
     size_t size() { return heap.size() - 1; }
+    size_t size() const { return heap.size() - 1; }
     T operator[](size_t i) { return heap[i + 1]; }
     T operator[](size_t i) const { return heap[i + 1]; }
     T top() { return heap[1]; }

@@ -207,9 +207,13 @@ public:
     const T &operator[](size_t i) const { return array[i]; }
 
     size_t max_size() { return maxHold; }
+    size_t max_size() const { return maxHold; }
     bool empty() { return numOfElement == 0; }
+    bool empty() const { return numOfElement == 0; }
     size_t capacity() { return cap; }
+    size_t capacity() const { return cap; }
     size_t size() { return numOfElement; }
+    size_t size() const { return numOfElement; }
     T front() { return array[0]; }
     T front() const { return array[0]; }
     T back() { return array[numOfElement - 1]; }
