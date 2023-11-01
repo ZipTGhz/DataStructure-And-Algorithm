@@ -13,7 +13,7 @@ Heineken
 MS005
 Loc 4 hop sua TH True Milk vi cam 180ml
 TH True Milk
-MS999
+END000
 HD001
 MS001
 0

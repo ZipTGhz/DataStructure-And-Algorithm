@@ -52,17 +52,17 @@ public:
     void setMaHang(const string &maHang) { this->maHang = maHang; }
     void setNgayMuaBan(const string ngayMuaBan) { this->ngayMuaBan = ngayMuaBan; }
 
-    bool getLoaiHoaDon() { return loaiHoaDon; }
-    bool getLoaiHoaDon() const { return loaiHoaDon; }
-    long long getSoLuong() { return soLuong; }
-    long long getSoLuong() const { return soLuong; }
-    long long getGiaMuaBan() { return giaMuaBan; }
-    long long getGiaMuaBan() const { return giaMuaBan; }
-    string getMaHoaDon() { return maHoaDon; }
-    string getMaHoaDon() const { return maHoaDon; }
-    string getMaHang() { return maHang; }
-    string getMaHang() const { return maHang; }
-    string getNgayMuaBan() { return ngayMuaBan; }
-    string getNgayMuaBan() const { return ngayMuaBan; }
+    const bool &getLoaiHoaDon() { return loaiHoaDon; }
+    const bool &getLoaiHoaDon() const { return loaiHoaDon; }
+    const long long &getSoLuong() { return soLuong; }
+    const long long &getSoLuong() const { return soLuong; }
+    const long long &getGiaMuaBan() { return giaMuaBan; }
+    const long long &getGiaMuaBan() const { return giaMuaBan; }
+    const string &getMaHoaDon() { return maHoaDon; }
+    const string &getMaHoaDon() const { return maHoaDon; }
+    const string &getMaHang() { return maHang; }
+    const string &getMaHang() const { return maHang; }
+    const string &getNgayMuaBan() { return ngayMuaBan; }
+    const string &getNgayMuaBan() const { return ngayMuaBan; }
 };
 #endif

@@ -13,7 +13,7 @@ class zVector
 private:
     size_t cap;
     size_t numOfElement;
-    size_t maxHold = ((size_t)(1 << 31) >> 1) / sizeof(T);
+    size_t maxHold = (ULLONG_MAX >> 1) / sizeof(T);
     T *array = nullptr;
 
     void extend(const size_t &newSize)
@@ -206,18 +206,18 @@ public:
     T &operator[](size_t i) { return array[i]; }
     const T &operator[](size_t i) const { return array[i]; }
 
-    size_t max_size() { return maxHold; }
-    size_t max_size() const { return maxHold; }
-    bool empty() { return numOfElement == 0; }
-    bool empty() const { return numOfElement == 0; }
-    size_t capacity() { return cap; }
-    size_t capacity() const { return cap; }
-    size_t size() { return numOfElement; }
-    size_t size() const { return numOfElement; }
-    T front() { return array[0]; }
-    T front() const { return array[0]; }
-    T back() { return array[numOfElement - 1]; }
-    T back() const { return array[numOfElement - 1]; }
+    const size_t &max_size() { return maxHold; }
+    const size_t &max_size() const { return maxHold; }
+    const bool &empty() { return numOfElement == 0; }
+    const bool &empty() const { return numOfElement == 0; }
+    const size_t &capacity() { return cap; }
+    const size_t &capacity() const { return cap; }
+    const size_t &size() { return numOfElement; }
+    const size_t &size() const { return numOfElement; }
+    const T &front() { return array[0]; }
+    const T &front() const { return array[0]; }
+    const T &back() { return array[numOfElement - 1]; }
+    const T &back() const { return array[numOfElement - 1]; }
 
     iterator begin() { return array; }
     iterator end() { return array + numOfElement; }
