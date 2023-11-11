@@ -1,9 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <unistd.h>
 
-#include "zVector.cpp"
-#include "autoGen.cpp"
 #include "DanhMucMatHang.cpp"
 #include "HoaDonMuaBanHang.cpp"
 
@@ -11,26 +8,27 @@
 
 using namespace std;
 
-#ifndef APP_CPP
-#define APP_CPP
+#ifndef MainApp__CPP
+#define MainApp__CPP
 
-zVector<DanhMucMatHang> MatHang;
-zVector<HoaDonMuaBanHang> HoaDon;
+class App
+{
+private:
+    DanhMucMatHang danhSach;
+    zVector<HoaDonMuaBanHang> HoaDon;
+    string countHoaDon = "0000";
 
-string countHoaDon = "0000";
-autoGen aGen;
+public:
+    void mainMenu();
+    void mode0();
+    void mode1();
+    void mode2();
+    void mode3();
+    void mode4();
+    void mode5();
+};
 
-void mainMenu();
-void mode0();
-void mode1();
-void mode2();
-void mode3();
-void mode4();
-void mode5();
-
-int findByMaHang(const string &);
-
-void mainMenu()
+void App::mainMenu()
 {
     cout << "*************PHAN MEM QUAN LY CUA HANG*************" << endl;
     cout << "*                                                 *" << endl;
@@ -49,13 +47,13 @@ void mainMenu()
     cout << "***************************************************" << endl;
 }
 
-void mode0()
+void App::mode0()
 {
     cout << "Dang thoat chuong trinh..." << endl;
     exit(0);
 }
 
-void mode1()
+void App::mode1()
 {
     string nameFile;
     fflush(stdin);
@@ -70,7 +68,7 @@ void mode1()
     cout << "Dang doc thong tin trong file..." << endl;
     while (true)
     {
-        DanhMucMatHang temp;
+        MatHang temp;
         string tempStr;
         getline(iFile, tempStr);
         if (tempStr == "END000")
@@ -78,11 +76,10 @@ void mode1()
         temp.setMaHang(tempStr);
         getline(iFile, tempStr), temp.setTenHang(tempStr);
         getline(iFile, tempStr), temp.setNhaSanXuat(tempStr);
-        MatHang.push_back(temp);
+        danhSach.addMat_Hang(temp);
     }
     while (!iFile.eof())
     {
-
         string maHoaDon, maHang, ngayMuaBan;
         bool loaiHoaDon;
         long long soLuong, giaMuaBan;
@@ -96,11 +93,11 @@ void mode1()
         iFile >> giaMuaBan;
         iFile.ignore();
         HoaDonMuaBanHang temp(maHoaDon, maHang, loaiHoaDon, soLuong, ngayMuaBan, giaMuaBan);
-        int pos = findByMaHang(maHang);
+        int pos = danhSach.findByMa_Hang(maHang);
         if (loaiHoaDon)
-            MatHang[pos].setSoLuong(MatHang[pos].getSoLuong() - soLuong);
+            danhSach[pos].setSoLuong(danhSach[pos].getSoLuong() - soLuong);
         else
-            MatHang[pos].setSoLuong(MatHang[pos].getSoLuong() + soLuong);
+            danhSach[pos].setSoLuong(danhSach[pos].getSoLuong() + soLuong);
 
         HoaDon.push_back(temp);
     }
@@ -114,19 +111,13 @@ void mode1()
     iFile.close();
 }
 
-void mode2()
+void App::mode2()
 {
     string nameFile;
     cout << "Nhap ten file muon xuat (VD: output.txt): ";
     cin >> nameFile;
     ofstream oFile(nameFile);
-    for (const DanhMucMatHang &x : MatHang)
-    {
-        oFile << x.getMaHang() << endl;
-        oFile << x.getTenHang() << endl;
-        oFile << x.getNhaSanXuat() << endl;
-    }
-    oFile << "END000\n";
+    export_DSMatHang_toFile(oFile, danhSach);
 
     for (const HoaDonMuaBanHang &x : HoaDon)
     {
@@ -142,12 +133,12 @@ void mode2()
     oFile.close();
 }
 
-void mode3()
+void App::mode3()
 {
     system("cls");
     HoaDonMuaBanHang tempHoaDon;
     cin >> tempHoaDon;
-    int pos = findByMaHang(tempHoaDon.getMaHang());
+    int pos = danhSach.findByMa_Hang(tempHoaDon.getMaHang());
     if (pos == -1)
     {
         cout << "Khong tim thay mat hang nao trong co so du lieu!" << endl;
@@ -162,7 +153,7 @@ void mode3()
             return;
         }
         fflush(stdin);
-        DanhMucMatHang tempMatHang;
+        MatHang tempMatHang;
         tempMatHang.setMaHang(tempHoaDon.getMaHang());
         string tempStr;
         cout << "Nhap ten hang:";
@@ -171,13 +162,13 @@ void mode3()
         cout << "Nhap ten nha san xuat: ";
         getline(cin, tempStr);
         tempMatHang.setNhaSanXuat(tempStr);
-        MatHang.push_back(tempMatHang);
+        danhSach.addMat_Hang(tempMatHang);
     }
-    pos = findByMaHang(tempHoaDon.getMaHang());
+    pos = danhSach.findByMa_Hang(tempHoaDon.getMaHang());
     if (!tempHoaDon.getLoaiHoaDon())
-        MatHang[pos].setSoLuong(MatHang[pos].getSoLuong() + tempHoaDon.getSoLuong());
-    else if (MatHang[pos].getSoLuong() >= tempHoaDon.getSoLuong())
-        MatHang[pos].setSoLuong(MatHang[pos].getSoLuong() - tempHoaDon.getSoLuong());
+        danhSach[pos].setSoLuong(danhSach[pos].getSoLuong() + tempHoaDon.getSoLuong());
+    else if (danhSach[pos].getSoLuong() >= tempHoaDon.getSoLuong())
+        danhSach[pos].setSoLuong(danhSach[pos].getSoLuong() - tempHoaDon.getSoLuong());
     else
     {
         cout << "Khong du so luong mat hang!";
@@ -189,51 +180,15 @@ void mode3()
     cout << "Da luu thong tin hoa don vao co so du lieu!" << endl;
 }
 
-void mode4()
+void App::mode4()
 {
     system("cls");
-    cout << "Toan bo danh cac mat hang:" << endl;
-    cout << "*****Ma_Hang********************Ten_Mat_Hang********************Nha_San_Xuat*****" << endl;
-    for (const DanhMucMatHang &x : MatHang)
-    {
-        cout << "* " << aGen.autoTab(10, 2) << "*" << endl;
-        cout << "*    " << x.getMaHang() << aGen.autoTab(2, 10);
-        cout << x.getTenHang() << aGen.autoTab(8, x.getTenHang().length() + 16);
-        cout << x.getNhaSanXuat() << aGen.autoTab(10, x.getNhaSanXuat().length() + 64) << "*" << endl;
-    }
-    cout << "* " << aGen.autoTab(10, 2) << "*" << endl;
-    cout << "*********************************************************************************" << endl;
+    danhSach.displayAllMat_Hang();
 }
 
-void mode5()
+void App::mode5()
 {
     system("cls");
-    int count = 0;
-    for (const DanhMucMatHang &x : MatHang)
-        if (x.getSoLuong() > 0)
-            count++;
-    cout << "Co " << count << " mat hang dang ton kho!" << endl;
-    cout << "************Ten_Mat_Hang*******************************Ton_Kho***" << endl;
-    for (const DanhMucMatHang &x : MatHang)
-    {
-        if (x.getSoLuong() > 0)
-        {
-            cout << "* " << aGen.autoTab(8, 2) << "*" << endl;
-            cout << "* " << x.getTenHang() << aGen.autoTab(7, x.getTenHang().length() + 2, '_') << x.getSoLuong() << "\t*" << endl;
-        }
-    }
-    cout << "* " << aGen.autoTab(8, 2) << "*" << endl;
-    cout << "*****************************************************************" << endl;
-}
-
-// Return position if maHang is found or -1 otherwise.
-int findByMaHang(const string &_maHang)
-{
-    for (int i = 0; i < MatHang.size(); i++)
-    {
-        if (MatHang[i].getMaHang() == _maHang)
-            return i;
-    }
-    return -1;
+    danhSach.displayTonKho();
 }
 #endif

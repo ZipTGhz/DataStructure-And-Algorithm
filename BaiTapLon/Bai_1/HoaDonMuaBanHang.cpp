@@ -65,4 +65,5 @@ public:
     const string &getNgayMuaBan() { return ngayMuaBan; }
     const string &getNgayMuaBan() const { return ngayMuaBan; }
 };
+
 #endif

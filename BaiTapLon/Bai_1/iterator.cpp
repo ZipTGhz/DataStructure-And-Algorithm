@@ -1,5 +1,5 @@
-#ifndef __iterator__cpp__
-#define __iterator__cpp__
+#ifndef iterator__cpp
+#define iterator__cpp
 
 template <class T>
 class zVector_reverse_iterator

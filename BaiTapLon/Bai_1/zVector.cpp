@@ -4,8 +4,8 @@
 
 using namespace std;
 
-#ifndef __vector__cpp__
-#define __vector__cpp__
+#ifndef zVector__cpp
+#define zVector__cpp
 
 template <class T>
 class zVector
@@ -36,7 +36,7 @@ public:
 
     zVector() : numOfElement{0}, cap(1), array(new T[1]) {}
 
-    zVector(const size_t &numOfElement, const T &x = 0)
+    zVector(const size_t &numOfElement, const T &x = T())
     {
         this->numOfElement = cap = numOfElement;
         array = new T[numOfElement];
@@ -85,7 +85,13 @@ public:
         for (size_t i = 0; i < cap; i++)
             array[i] = _vector.array[i];
     }
+    ~zVector()
+    {
+        if (array)
+            delete[] array;
+    }
 
+    // Modifiers
     void push_back(const T &__x)
     {
         if (!array)
@@ -94,30 +100,37 @@ public:
             extend(cap * 2);
         array[numOfElement++] = __x;
     }
-
     void pop_back()
     {
         if (numOfElement > 0)
             numOfElement--;
     }
-
-    void resize(const size_t newSize, const T __val = 0)
+    void insert(const iterator &__position, const T &__val)
     {
-        if (newSize > maxHold)
-            __throw_length_error;
-        if (newSize <= numOfElement)
-        {
-            numOfElement = newSize;
-            return;
-        }
-        T *newArray = new T[newSize];
-        for (size_t i = 0; i < newSize; i++)
-            newArray[i] = (i < numOfElement ? array[i] : __val);
-        delete[] array;
-        array = newArray;
-        numOfElement = cap = newSize;
+        long long pos = __position - array;
+        if (numOfElement + 1 > cap)
+            extend(cap * 2);
+        for (iterator it = array + numOfElement; it >= array + pos; it--)
+            *(it + 1) = *it;
+        *(array + pos) = __val;
+        numOfElement++;
     }
+    template <class _InputIterator>
+    void insert(const iterator &__position, _InputIterator __first, _InputIterator __last)
+    {
+        long long length = abs(__last - __first);
+        long long pos = __position - array;
+        if (numOfElement + length > cap)
+            extend(numOfElement + length);
 
+        for (iterator it = array + numOfElement - 1; it >= array + pos; it--)
+            *(it + length) = *(it);
+
+        iterator temp = array + pos;
+        for (_InputIterator it = __first; it != __last; it++)
+            *(temp++) = *it;
+        numOfElement = cap;
+    }
     void erase(const iterator &__position)
     {
         if (__position >= array + numOfElement)
@@ -144,46 +157,31 @@ public:
         }
         numOfElement = numOfElement - (__second - __first + 1);
     }
-
-    void insert(const iterator &__position, const T &__val)
+    void clear()
     {
-        long long pos = __position - array;
-        if (numOfElement + 1 > cap)
-            extend(cap * 2);
-        for (iterator it = array + numOfElement; it >= array + pos; it--)
-            *(it + 1) = *it;
-        *(array + pos) = __val;
-        numOfElement++;
+        if (array)
+            delete[] array;
+        numOfElement = 0, cap = 1;
+        array = nullptr;
     }
 
-    template <class _InputIterator>
-    void insert(const iterator &__position, _InputIterator __first, _InputIterator __last)
+    // Capacity
+    void resize(const size_t newSize, const T __val = T())
     {
-        long long length = abs(__last - __first);
-        long long pos = __position - array;
-        if (numOfElement + length > cap)
-            extend(numOfElement + length);
-
-        for (iterator it = array + numOfElement - 1; it >= array + pos; it--)
-            *(it + length) = *(it);
-
-        iterator temp = array + pos;
-        for (_InputIterator it = __first; it != __last; it++)
-            *(temp++) = *it;
-        numOfElement = cap;
-    }
-
-    // Return an iterator pointing to the first element equal val, or end() otherwise.
-    iterator find(const T &__val)
-    {
-        for (iterator it = array; it != array + numOfElement; it++)
+        if (newSize > maxHold)
+            __throw_length_error;
+        if (newSize <= numOfElement)
         {
-            if (*it == __val)
-                return it;
+            numOfElement = newSize;
+            return;
         }
-        return array + numOfElement;
+        T *newArray = new T[newSize];
+        for (size_t i = 0; i < newSize; i++)
+            newArray[i] = (i < numOfElement ? array[i] : __val);
+        delete[] array;
+        array = newArray;
+        numOfElement = cap = newSize;
     }
-
     void shrink_to_fit()
     {
         T *newArray = new T[numOfElement];
@@ -194,40 +192,31 @@ public:
         array = newArray;
         cap = numOfElement;
     }
-
-    void clear()
-    {
-        if (array)
-            delete[] array;
-        numOfElement = 0, cap = 1;
-        array = nullptr;
-    }
-
-    T &operator[](size_t i) { return array[i]; }
-    const T &operator[](size_t i) const { return array[i]; }
-
-    const size_t &max_size() { return maxHold; }
-    const size_t &max_size() const { return maxHold; }
-    const bool &empty() { return numOfElement == 0; }
-    const bool &empty() const { return numOfElement == 0; }
-    const size_t &capacity() { return cap; }
-    const size_t &capacity() const { return cap; }
     const size_t &size() { return numOfElement; }
     const size_t &size() const { return numOfElement; }
+    const size_t &max_size() { return maxHold; }
+    const size_t &max_size() const { return maxHold; }
+    const size_t &capacity() { return cap; }
+    const size_t &capacity() const { return cap; }
+    const bool &empty() { return numOfElement == 0; }
+    const bool &empty() const { return numOfElement == 0; }
+
+    // Element access
+    T &operator[](size_t i) { return array[i]; }
+    const T &operator[](size_t i) const { return array[i]; }
     const T &front() { return array[0]; }
     const T &front() const { return array[0]; }
     const T &back() { return array[numOfElement - 1]; }
     const T &back() const { return array[numOfElement - 1]; }
 
+    // Iterators
     iterator begin() { return array; }
+    iterator begin() const { return array; }
     iterator end() { return array + numOfElement; }
+    iterator end() const { return array + numOfElement; }
     reverse_iterator rbegin() { return array + numOfElement - 1; }
+    reverse_iterator rbegin() const { return array + numOfElement - 1; }
     reverse_iterator rend() { return array - 1; }
-
-    ~zVector()
-    {
-        if (array)
-            delete[] array;
-    }
+    reverse_iterator rend() const { return array - 1; }
 };
 #endif

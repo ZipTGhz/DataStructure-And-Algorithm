@@ -31,7 +31,7 @@ private:
             larger = right;
         else
             larger = parent;
-        if (left < heap.size() && comp(heap[parent], heap[left]))
+        if (left < heap.size() && comp(heap[larger], heap[left]))
             larger = left;
 
         if (larger != parent)

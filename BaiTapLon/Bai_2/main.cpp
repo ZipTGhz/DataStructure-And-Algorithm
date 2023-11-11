@@ -3,8 +3,9 @@
 int main()
 {
     int n;
+    cout << "Nhap so luong phan tu: ";
     cin >> n;
-    zHeap<int, greater<int>> myPQueue;
+    zHeap<int> myPQueue;
     while (n--)
     {
         int x;
@@ -12,18 +13,12 @@ int main()
         myPQueue.push(x);
     }
 
-    int res = 0;
-
-    while (myPQueue.size() != 1)
+    cout << "Day giam dan la: ";
+    while (!myPQueue.empty())
     {
-        int first = myPQueue.top();
+        int temp = myPQueue.top();
         myPQueue.pop();
-        int second = myPQueue.top();
-        myPQueue.pop();
-        int sum = first + second;
-        res += sum;
-        myPQueue.push(sum);
+        cout << temp << " ";
     }
-    cout << res;
     return 0;
 }

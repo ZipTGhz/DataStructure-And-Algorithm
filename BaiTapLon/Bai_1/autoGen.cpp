@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#ifndef autoGen_cpp
+#define autoGen_cpp
 class autoGen
 {
 private:
@@ -53,3 +55,4 @@ public:
         return generateMaHoaDon + countHoaDon;
     }
 };
+#endif
