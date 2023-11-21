@@ -14,8 +14,8 @@ private:
 public:
     autoGen() {}
 
-    string autoGenerateCurrentDay = (to_string(ltm->tm_mday) + "/" + to_string(1 + ltm->tm_mon) + "/" + to_string(1900 + ltm->tm_year));
-    string generateMaHoaDon = ("HD" + to_string(1900 + ltm->tm_year) + to_string(1 + ltm->tm_mon) + to_string(ltm->tm_mday));
+    string autoGenerateCurrentDay = to_string(ltm->tm_mday) + "/" + to_string(1 + ltm->tm_mon) + "/" + to_string(1900 + ltm->tm_year);
+    string generateMaHoaDon = "HD" + to_string(1900 + ltm->tm_year) + to_string(1 + ltm->tm_mon) + to_string(ltm->tm_mday);
 
     string autoTab(int _tabTimes, const int &_strLen)
     {

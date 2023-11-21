@@ -8,10 +8,10 @@ using namespace std;
 class MatHang
 {
 private:
+    long long soLuong;
     string maHang;
     string tenHang;
     string nhaSanXuat;
-    long long soLuong;
 
 public:
     MatHang(string maHang = "Unknown", string tenHang = "Unknown", string nhaSanXuat = "Unknown") : soLuong(0)

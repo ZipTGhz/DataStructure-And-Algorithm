@@ -8,7 +8,6 @@ void returnMenu();
 
 main()
 {
-
     system("cls");
     mainApp.mainMenu();
     chooseMode();

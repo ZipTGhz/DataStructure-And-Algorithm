@@ -20,7 +20,7 @@ public:
     void addMat_Hang(const MatHang &);
     void displayAllMat_Hang() const;
     void displayTonKho() const;
-    int findByMa_Hang(const string &) const;
+    long long findByMa_Hang(const string &) const;
     MatHang &operator[](size_t index) { return danhSachMatHang[index]; }
     const MatHang &operator[](size_t index) const { return danhSachMatHang[index]; }
     friend void export_DSMatHang_toFile(ofstream &, const DanhMucMatHang &);
@@ -65,7 +65,7 @@ void DanhMucMatHang::displayTonKho() const
     cout << "Co " << count << " mat hang dang ton kho!" << endl;
 }
 
-int DanhMucMatHang::findByMa_Hang(const string &maHang) const
+long long DanhMucMatHang::findByMa_Hang(const string &maHang) const
 {
     for (int i = 0; i < danhSachMatHang.size(); i++)
     {

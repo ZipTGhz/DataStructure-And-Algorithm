@@ -5,7 +5,8 @@
 #include "HoaDonMuaBanHang.cpp"
 
 #define endl "\n"
-
+#define HD_BAN true
+#define HD_MUA false
 using namespace std;
 
 #ifndef MainApp__CPP
@@ -141,28 +142,35 @@ void App::mode3()
     int pos = danhSach.findByMa_Hang(tempHoaDon.getMaHang());
     if (pos == -1)
     {
-        cout << "Khong tim thay mat hang nao trong co so du lieu!" << endl;
-        cout << "Ban co muon nhap san pham nay vao khong?" << endl;
-        cout << "0 - KHONG\t1 - CO" << endl;
-        cout << "Nhap lua chon cua ban: ";
-        bool yourChoice;
-        cin >> yourChoice;
-        if (!yourChoice)
+        if (tempHoaDon.getLoaiHoaDon() == HD_BAN)
         {
-            cout << "Ban da chon khong!" << endl;
+            cout << "Khong the ban mat hang khong ton tai!" << endl;
             return;
         }
-        fflush(stdin);
-        MatHang tempMatHang;
-        tempMatHang.setMaHang(tempHoaDon.getMaHang());
-        string tempStr;
-        cout << "Nhap ten hang:";
-        getline(cin, tempStr);
-        tempMatHang.setTenHang(tempStr);
-        cout << "Nhap ten nha san xuat: ";
-        getline(cin, tempStr);
-        tempMatHang.setNhaSanXuat(tempStr);
-        danhSach.addMat_Hang(tempMatHang);
+        else
+        {
+            cout << "Ban co muon nhap san pham nay vao khong?" << endl;
+            cout << "0 - KHONG\t1 - CO" << endl;
+            cout << "Nhap lua chon cua ban: ";
+            bool yourChoice;
+            cin >> yourChoice;
+            if (!yourChoice)
+            {
+                cout << "Ban da chon khong!" << endl;
+                return;
+            }
+            fflush(stdin);
+            MatHang tempMatHang;
+            tempMatHang.setMaHang(tempHoaDon.getMaHang());
+            string tempStr;
+            cout << "Nhap ten hang:";
+            getline(cin, tempStr);
+            tempMatHang.setTenHang(tempStr);
+            cout << "Nhap ten nha san xuat: ";
+            getline(cin, tempStr);
+            tempMatHang.setNhaSanXuat(tempStr);
+            danhSach.addMat_Hang(tempMatHang);
+        }
     }
     pos = danhSach.findByMa_Hang(tempHoaDon.getMaHang());
     if (!tempHoaDon.getLoaiHoaDon())
@@ -171,7 +179,7 @@ void App::mode3()
         danhSach[pos].setSoLuong(danhSach[pos].getSoLuong() - tempHoaDon.getSoLuong());
     else
     {
-        cout << "Khong du so luong mat hang!";
+        cout << "Khong du so luong mat hang!" << endl;
         return;
     }
     tempHoaDon.setMaHoaDon(aGen.autoGenerate_MaHoaDon(countHoaDon));
