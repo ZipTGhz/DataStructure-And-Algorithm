@@ -229,5 +229,7 @@ public:
         if (array)
             delete[] array;
     }
+
+    
 };
 #endif

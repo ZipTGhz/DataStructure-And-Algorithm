@@ -8,7 +8,7 @@ class zVector_reverse_iterator
 
 public:
     zVector_reverse_iterator(T *pointer = nullptr) : pointer(pointer) {}
-    void operator=(zVector_reverse_iterator<T> it) { pointer = it.pointer }
+    void operator=(zVector_reverse_iterator<T> it) { pointer = it.pointer; }
     T &operator*() { return *pointer; }
     T &operator*() const { return *pointer; }
 
